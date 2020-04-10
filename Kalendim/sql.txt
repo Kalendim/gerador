@@ -1,0 +1,76 @@
+
+create table turma(
+turno varchar(50) not null,
+ensino varchar(50) not null,
+anoletivo varchar(10) not null,
+datadeinicio date not null,
+periodo int not null,
+numero int not null,
+idturma int auto_increment,
+primary key(idturma)
+);
+create table endereco(
+idendereco int auto_increment,
+cidade varchar(50) not null,
+bairro varchar(50),
+rua varchar(50),
+numerocasa int not null,
+cep varchar(50) not null,
+primary key(idendereco)
+);
+create table contato(
+idcontato int auto_increment,
+celular int not null,
+telefone int not null,
+email varchar(50) not null,
+primary key(idcontato)
+);
+create table aluno(
+nome varchar(50) not null,
+cor varchar(50) not null,
+sexo varchar(10) not null,
+classesocial varchar(50) not null,
+nacionalidade varchar(50) not null,
+datanascimento varchar(50) not null,
+idturma int,
+idendereco int,
+idcontato int,
+idaluno int auto_increment,
+foreign key(idendereco) references endereco(idendereco),
+foreign key(idcontato) references contato(idcontato),
+foreign key(idturma) references turma(idturma),
+primary key(idaluno)
+);
+
+create table professor(
+nome varchar(50) not null,
+sexo varchar(10) not null,
+nacionalidade varchar(50) not null,
+datanascimento varchar(50) not null,
+disciplinas varchar(50),
+idendereco int,
+idcontato int,
+idprofessor int auto_increment,
+foreign key(idendereco) references endereco(idendereco),
+foreign key(idcontato) references contato(idcontato),
+primary key(idprofessor)
+);
+
+create table materia(
+idmateria int auto_increment not null,
+nome varchar(50) not null,
+idprofessor int,
+primary key(idmateria),
+foreign key(idprofessor) references professor(idprofessor)
+);
+create table horario(
+idhorario int auto_increment not null,
+idmateria int,
+dia int,
+numero int not null,
+idturma int,
+tempo int,
+primary key(idhorario),
+foreign key(idmateria) references materia(idmateria),
+foreign key(idturma) references turma(idturma)
+);
